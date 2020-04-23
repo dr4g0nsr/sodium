@@ -53,7 +53,7 @@ func NewGenericHashDefaultKeyed(key GenericHashKey) GenericHash {
 //Unkeyed version, output length should between 16 (128-bit) to 64 (512-bit).
 func NewGenericHash(outlen int) GenericHash {
 	checkSizeInRange(outlen, cryptoGenericHashBytesMin, cryptoGenericHashBytesMax, "out")
-	state := (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulong(cryptoGenericHashStateBytes)))
+	state := (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulonglong(cryptoGenericHashStateBytes)))
 	hash := GenericHash{
 		size:      outlen,
 		blocksize: 128,
@@ -68,7 +68,7 @@ func NewGenericHash(outlen int) GenericHash {
 //Keyed version, output length in bytes should between 16 (128-bit) to 64 (512-bit).
 func NewGenericHashKeyed(outlen int, key GenericHashKey) GenericHash {
 	checkSizeInRange(outlen, cryptoGenericHashBytesMin, cryptoGenericHashBytesMax, "out")
-	state := (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulong(cryptoGenericHashStateBytes)))
+	state := (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulonglong(cryptoGenericHashStateBytes)))
 	checkTypedSize(&key, "generic hash key")
 	hash := GenericHash{
 		size:      outlen,
@@ -96,7 +96,7 @@ func (g GenericHash) BlockSize() int {
 //Implements hash.Hash
 func (g *GenericHash) Reset() {
 	if g.state == nil {
-		g.state = (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulong(cryptoGenericHashStateBytes)))
+		g.state = (*C.struct_crypto_generichash_blake2b_state)(C.sodium_malloc(C.ulonglong(cryptoGenericHashStateBytes)))
 	}
 	if g.sum != nil {
 		g.sum = nil

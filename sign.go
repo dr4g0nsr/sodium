@@ -223,7 +223,7 @@ type SignState struct {
 // MakeSignState creates an empty state for multi-part messages that can't fit
 // in memory.
 func MakeSignState() SignState {
-	state := (*C.struct_crypto_sign_ed25519ph_state)(C.sodium_malloc(C.ulong(cryptoSignStateBytes)))
+	state := (*C.struct_crypto_sign_ed25519ph_state)(C.sodium_malloc(C.ulonglong(cryptoSignStateBytes)))
 	s := SignState{state}
 	if int(C.crypto_sign_init(
 		s.state)) != 0 {
